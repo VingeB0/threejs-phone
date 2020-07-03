@@ -75,8 +75,20 @@ function init() {
                   .to({ x: 0.485 }, 2000)
                   .easing(TWEEN.Easing.Quadratic.Out)
 
+                const tween3 = new TWEEN.Tween(xy)
+                  .delay(1000)
+                  .to({ x: 0.241 }, 2000)
+                  .easing(TWEEN.Easing.Quadratic.Out)
+
+                const tween4 = new TWEEN.Tween(xy)
+                  .delay(1000)
+                  .to({ x: 0 }, 2000)
+                  .easing(TWEEN.Easing.Quadratic.Out)
+
                 tween1.chain(tween2)
-                tween2.chain(tween1)
+                tween2.chain(tween3)
+                tween3.chain(tween4)
+                tween4.chain(tween1)
 
                 tween1.start();
                 // console.log(xy)
