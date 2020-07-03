@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-size: 100%;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-weight: lighter;
+    background: gainsboro;
+}
+
+
+.svg-loader {
+    pointer-events: none;
+    height: 15%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 1s;
+    opacity: 0;
+}
+
+.show-svg {
+    opacity: 1;
+}
