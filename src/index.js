@@ -9,7 +9,7 @@ import { TextureLoader } from "three";
 import TWEEN from '@tweenjs/tween.js';
 
 import PhoneModel from './assets/models/phone3d.glb';
-import TexturePhone from './assets/texture/phoneImage1.jpg';
+import TexturePhone from './assets/texture/phoneImage3.jpg';
 
 var camera, scene, renderer;
 var geometry, material, mesh;
@@ -37,7 +37,8 @@ function init() {
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
 
-    dracoLoader.setDecoderPath('http://localhost:8717/draco/');
+    // dracoLoader.setDecoderPath('http://localhost:8717/draco/');
+    dracoLoader.setDecoderPath('./draco/');
 
     loader.setDRACOLoader(dracoLoader);
 
@@ -117,7 +118,7 @@ function init() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.querySelector('#canvas').appendChild( renderer.domElement );
 
-    // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     window.addEventListener( 'resize', onWindowResize, false );
 }
 
