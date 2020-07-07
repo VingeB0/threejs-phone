@@ -9,7 +9,7 @@ import { TextureLoader } from "three";
 import TWEEN from '@tweenjs/tween.js';
 
 import PhoneModel from './assets/models/phone3d.glb';
-import TexturePhone from './assets/texture/phoneImage3.jpg';
+import TexturePhone from './assets/texture/phoneImage4.jpg';
 
 var camera, scene, renderer;
 var geometry, material, mesh;
@@ -25,7 +25,15 @@ animate();
 
 function init() {
     camera = new THREE.PerspectiveCamera( 26, window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.z = 1800;
+    camera.position.z = 18800;
+
+    var scaleCamera = camera.position;
+    const tweenScale = new TWEEN.Tween(scaleCamera)
+      .delay(1000)
+      .to({ z: 1800 }, 1000)
+      .easing(TWEEN.Easing.Quadratic.Out)
+
+    tweenScale.start()
 
     scene = new THREE.Scene();
     window.scene = scene;
@@ -34,10 +42,15 @@ function init() {
     light.position.set( .1, 0, 1 );
     scene.add(light);
 
+    var geometryPlane = new THREE.PlaneGeometry( 18, 4, 32 );
+    // var geometryPlane = new THREE.PlaneGeometry( 80, 10, 32 );
+    var materialplane = new THREE.MeshBasicMaterial( {color: 0x494949, side: THREE.DoubleSide} );
+    var planePhone = new THREE.Mesh( geometryPlane, materialplane );
+    planePhone.name = 'planePhone'
+
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
 
-    // dracoLoader.setDecoderPath('http://localhost:8717/draco/');
     dracoLoader.setDecoderPath('./draco/');
 
     loader.setDRACOLoader(dracoLoader);
@@ -47,7 +60,9 @@ function init() {
         var newMaterial = new THREE.MeshStandardMaterial({color: 0x494949});
 
         model1.traverse((o) => {
-            if(o.name === 'Iphone001') o.material = newMaterial
+            if(o.name === 'Iphone001') {
+                o.material = newMaterial;
+            }
             // o.material = newMaterial
 
             if(o.name === 'header_footer') {
@@ -94,7 +109,6 @@ function init() {
                 tween1.start();
                 // console.log(xy)
             }
-
         });
 
         const model2 = model1.clone();
@@ -106,6 +120,13 @@ function init() {
         model2.scale.set(2, 2, 2);
         model2.rotation.set(0, -.5, 0);
         model2.position.set(50, 60, 50);
+
+        planePhone.scale.set(2, 2, 2);
+        planePhone.position.set(5, 102, 0);
+        const planePhone2 = planePhone.clone();
+
+        model1.add(planePhone);
+        model2.add(planePhone2);
 
         scene.add( model1 );
         scene.add( model2 );
