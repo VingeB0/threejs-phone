@@ -48,6 +48,10 @@ function init() {
     var planePhone = new THREE.Mesh( geometryPlane, materialplane );
     planePhone.name = 'planePhone'
 
+    var geometryPlaneSide = new THREE.PlaneGeometry( 18, 18, 32 );
+    var planePhoneSide = new THREE.Mesh( geometryPlaneSide, materialplane );
+    planePhoneSide.name = 'planePhone'
+
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
 
@@ -63,7 +67,6 @@ function init() {
             if(o.name === 'Iphone001') {
                 o.material = newMaterial;
             }
-            // o.material = newMaterial
 
             if(o.name === 'header_footer') {
                 var textureHeaderFooter = new THREE.TextureLoader().load( TexturePhone );
@@ -79,25 +82,38 @@ function init() {
                 o.material = materialTextureBody;
                 o.material.map.offset.x = 0;
                 o.material.map.offset.y = 0.286;
+            }
+
+        });
+
+        const model2 = model1.clone();
+
+        model2.traverse((o) => {
+            if(o.name === 'Ecran001') {
+                var textureBody = new THREE.TextureLoader().load( TexturePhone );
+                var materialTextureBody = new THREE.MeshBasicMaterial( { map: textureBody } );
+                o.material = materialTextureBody;
+                o.material.map.offset.x = 0;
+                o.material.map.offset.y = 0.286;
 
                 var xy = o.material.map.offset;
                 const tween1 = new TWEEN.Tween(xy)
-                  .delay(1000)
+                  .delay(4000)
                   .to({ x: 0.241 }, 2000)
                   .easing(TWEEN.Easing.Quadratic.Out)
 
                 const tween2 = new TWEEN.Tween(xy)
-                  .delay(1000)
+                  .delay(4000)
                   .to({ x: 0.485 }, 2000)
                   .easing(TWEEN.Easing.Quadratic.Out)
 
                 const tween3 = new TWEEN.Tween(xy)
-                  .delay(1000)
+                  .delay(4000)
                   .to({ x: 0.241 }, 2000)
                   .easing(TWEEN.Easing.Quadratic.Out)
 
                 const tween4 = new TWEEN.Tween(xy)
-                  .delay(1000)
+                  .delay(4000)
                   .to({ x: 0 }, 2000)
                   .easing(TWEEN.Easing.Quadratic.Out)
 
@@ -107,17 +123,14 @@ function init() {
                 tween4.chain(tween1)
 
                 tween1.start();
-                // console.log(xy)
             }
         });
 
-        const model2 = model1.clone();
-
-        model1.scale.set(2, 2, 2);
+        model1.scale.set(1.8, 1.8, 1.8);
         model1.rotation.set(0, .7, 0);
         model1.position.set(-100, -30, 0);
 
-        model2.scale.set(2, 2, 2);
+        model2.scale.set(2.1, 2.1, 2.1);
         model2.rotation.set(0, -.5, 0);
         model2.position.set(50, 60, 50);
 
@@ -125,8 +138,22 @@ function init() {
         planePhone.position.set(5, 102, 0);
         const planePhone2 = planePhone.clone();
 
+        planePhoneSide.scale.set(2.1, 2.1, 2.1);
+        planePhoneSide.position.set(35.5, 5, 1);
+
+        const planePhoneSide2 = planePhoneSide.clone();
+        const planePhoneSide3 = planePhoneSide.clone();
+
+        planePhoneSide2.position.set(35.5, 5, -2.6);
+
+        planePhoneSide3.position.set(-49, 77, -1);
+        planePhoneSide3.scale.set(.65, .65, .65);
+
         model1.add(planePhone);
         model2.add(planePhone2);
+        model2.add(planePhoneSide);
+        model2.add(planePhoneSide2);
+        model1.add(planePhoneSide3);
 
         scene.add( model1 );
         scene.add( model2 );
